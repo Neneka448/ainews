@@ -10,4 +10,8 @@ public interface UserConverter {
     UserDO toDO(User user);
 
     List<UserDO> toDOs(List<User> users);
+
+    User toPO(UserDO userDO);
+
+    List<User> toPOs(List<UserDO> userDOs);
 }

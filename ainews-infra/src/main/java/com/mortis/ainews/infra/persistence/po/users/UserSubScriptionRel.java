@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
@@ -14,6 +15,7 @@ public class UserSubScriptionRel {
 
     @Embeddable
     @Data
+    @AllArgsConstructor
     static public class UserSubScriptionRelPK implements java.io.Serializable {
         @Column(name = "user_id")
         private Long userId;

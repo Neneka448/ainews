@@ -11,6 +11,5 @@ public class UserDO {
     private Long id;
     private String userName;
     private String ac;
-    // omit pw for security when exposing DO
     private int deleted;
 }

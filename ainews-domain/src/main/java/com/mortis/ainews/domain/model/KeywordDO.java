@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class KeywordDO {
     private Long id;
     private String content;
+    private int deleted;
 }
