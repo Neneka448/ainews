@@ -1,0 +1,49 @@
+# OS / Mac
+.DS_Store
+
+# Maven / Build outputs
+**/target/
+# Maven shade leftover
+**/dependency-reduced-pom.xml
+# Maven timing
+.mvn/timing.properties
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# Java / JVM
+hs_err_pid*
+replay_pid*
+*.hprof
+
+# Logs
+logs/
+*.log
+*.out
+*.err
+
+# Binaries
+bin/
+out/
+
+# Env / secrets
+.env
+.env.*
+*.local
+
+# Node (if any frontend added later)
+node_modules/
+
+# Ignore external config secrets
+/config/
+# Ignore starter module external config
+/ainews-starter/config/
