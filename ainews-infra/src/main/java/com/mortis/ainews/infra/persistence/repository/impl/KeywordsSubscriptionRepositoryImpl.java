@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import com.mortis.ainews.domain.model.KeywordDO;
-import com.mortis.ainews.domain.repository.SubscriptionRepository.ISubscriptionRepository;
+import com.mortis.ainews.domain.repository.SubscriptionRepository.IKeywordsSubscriptionRepository;
 import com.mortis.ainews.infra.persistence.converter.KeywordConverter;
 import com.mortis.ainews.infra.persistence.po.keywords.Keyword;
 import com.mortis.ainews.infra.persistence.po.users.UserSubScriptionRel;
@@ -18,7 +18,7 @@ import com.mortis.ainews.infra.persistence.repository.interfaces.UserSubScriptio
 
 @Repository
 @RequiredArgsConstructor
-public class SubscriptionRepositoryImpl implements ISubscriptionRepository {
+public class KeywordsSubscriptionRepositoryImpl implements IKeywordsSubscriptionRepository {
 
     private final UserSubScriptionRelRepository relRepo;
     private final KeywordRepository keywordRepo;
@@ -31,18 +31,16 @@ public class SubscriptionRepositoryImpl implements ISubscriptionRepository {
     @Transactional(readOnly = true)
     public List<KeywordDO> findKeywordsByUserId(Long userId) {
         List<UserSubScriptionRel> rels = relRepo.findByIdUserIdAndDeleted(userId, 0);
-        if (rels == null || rels.isEmpty()) {
+        if (rels.isEmpty()) {
             return List.of();
         }
 
-        // 先提取 PK 列表，再从 PK 中取出 keywordId，避免链式映射导致的类型推断问题
         List<UserSubScriptionRel.UserSubScriptionRelPK> pks = rels.stream()
                 .map(UserSubScriptionRel::getId)
                 .collect(Collectors.toList());
 
         List<Long> ids = pks.stream()
                 .map(pk -> pk.getKeywordId())
-                .filter(java.util.Objects::nonNull)
                 .distinct()
                 .collect(Collectors.toList());
 

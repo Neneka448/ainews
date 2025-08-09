@@ -1,7 +1,6 @@
 package com.mortis.ainews.infra.service.impl.keyword;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.mortis.ainews.domain.model.KeywordDO;
@@ -76,6 +75,8 @@ public class KeywordService implements IKeywordService {
     @Override
     public List<KeywordDO> findKeywordsByIds(List<Long> keywordIds) {
         return converter.keywordConverter
-                .toDOs(keywordRepo.findAllById(keywordIds).stream().collect(Collectors.toList()));
+                .toDOs(keywordRepo.findAllById(keywordIds).stream().filter(keyword -> keyword.getDeleted() == 0)
+                        .collect(Collectors.toList()));
     }
+
 }

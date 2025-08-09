@@ -11,6 +11,7 @@ import lombok.Data;
 @Entity
 @Table(name = "ai_news_user_subscription")
 @Data
+@AllArgsConstructor
 public class UserSubScriptionRel {
 
     @Embeddable

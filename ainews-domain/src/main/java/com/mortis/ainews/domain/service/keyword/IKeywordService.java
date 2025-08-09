@@ -15,4 +15,5 @@ public interface IKeywordService {
     List<Long> updateKeywords(List<KeywordDO> keywordDOs);
 
     List<KeywordDO> findKeywordsByIds(List<Long> keywordIds);
+
 }
