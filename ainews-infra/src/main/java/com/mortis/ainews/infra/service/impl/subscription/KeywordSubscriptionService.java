@@ -23,6 +23,7 @@ import com.mortis.ainews.domain.service.subscription.IKeywordSubscriptionService
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class KeywordSubscriptionService implements IKeywordSubscriptionService {
 
         private final UserSubScriptionRelRepository relRepo;
@@ -31,7 +32,6 @@ public class KeywordSubscriptionService implements IKeywordSubscriptionService {
         private final KeywordService keywordService;
 
         @Override
-        @Transactional
         public List<Long> subscribe(Long userId, List<Long> keywordIds) {
                 var user = userService.findUserById(userId);
                 if (user.isEmpty()) {
@@ -85,7 +85,6 @@ public class KeywordSubscriptionService implements IKeywordSubscriptionService {
         }
 
         @Override
-        @Transactional
         public List<Long> unsubscribe(Long userId, List<Long> keywordIds) {
                 var user = userService.findUserById(userId);
                 if (user.isEmpty()) {
