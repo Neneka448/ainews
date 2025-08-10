@@ -1,7 +1,6 @@
 package com.mortis.ainews.infra.persistence.converter;
 
 import org.mapstruct.Mapper;
-import org.springframework.integration.annotation.Default;
 
 import java.util.List;
 import com.mortis.ainews.infra.persistence.po.keywords.Keyword;

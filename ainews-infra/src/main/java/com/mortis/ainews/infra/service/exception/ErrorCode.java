@@ -1,8 +1,12 @@
 package com.mortis.ainews.infra.service.exception;
 
 public enum ErrorCode {
+    // 正常
+    SUCCESS(0, "成功"),
+
     // 通用错误
     COMMON_ERROR(10001, "未知错误"),
+    PARAMS_VALIDATION_ERROR(10002, "参数校验错误"),
 
     // UserService错误
     USER_NOT_FOUND(20001, "用户不存在"),

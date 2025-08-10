@@ -4,12 +4,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.mortis.ainews.domain.model.KeywordDO;
+import com.mortis.ainews.domain.model.PageQuery;
+import com.mortis.ainews.domain.model.PageData;
 import com.mortis.ainews.infra.persistence.converter.facade.ConverterFacade;
 import com.mortis.ainews.infra.persistence.po.keywords.Keyword;
 import com.mortis.ainews.infra.persistence.repository.interfaces.KeywordRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mortis.ainews.domain.service.keyword.IKeywordService;
@@ -77,6 +83,36 @@ public class KeywordService implements IKeywordService {
         return converter.keywordConverter
                 .toDOs(keywordRepo.findAllById(keywordIds).stream().filter(keyword -> keyword.getDeleted() == 0)
                         .collect(Collectors.toList()));
+    }
+
+    @Override
+    public PageData<KeywordDO> findKeywordsWithPaging(PageQuery pageQuery) {
+        Pageable pageable = PageRequest.of(
+                pageQuery.getPageNum() - 1, // Spring Data的页码从0开始
+                pageQuery.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "id")); // 按ID倒序
+
+        Page<Keyword> page = keywordRepo.findByDeleted(0, pageable);
+        List<KeywordDO> keywordDOs = converter.keywordConverter.toDOs(page.getContent());
+
+        return new PageData<>(keywordDOs, page.getTotalElements(), pageQuery);
+    }
+
+    @Override
+    public PageData<KeywordDO> searchKeywordsByContent(String content, PageQuery pageQuery) {
+        if (content == null || content.isBlank()) {
+            return findKeywordsWithPaging(pageQuery);
+        }
+
+        Pageable pageable = PageRequest.of(
+                pageQuery.getPageNum() - 1, // Spring Data的页码从0开始
+                pageQuery.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "id")); // 按ID倒序
+
+        Page<Keyword> page = keywordRepo.findByContentContainingAndDeleted(content.trim(), 0, pageable);
+        List<KeywordDO> keywordDOs = converter.keywordConverter.toDOs(page.getContent());
+
+        return new PageData<>(keywordDOs, page.getTotalElements(), pageQuery);
     }
 
 }

@@ -7,16 +7,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "ai_news_user_subscription")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserSubScriptionRel {
 
     @Embeddable
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     static public class UserSubScriptionRelPK implements java.io.Serializable {
         @Column(name = "user_id")
         private Long userId;

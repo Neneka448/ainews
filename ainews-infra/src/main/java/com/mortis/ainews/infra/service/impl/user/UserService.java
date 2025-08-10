@@ -59,7 +59,16 @@ public class UserService implements IUserService {
             throw new ServiceException(ErrorCode.USER_NOT_FOUND);
         }
 
-        userRepository.save(converter.userConverter.toPO(userDO));
+        // 只更新非null字段
+        var existingUser = user.get();
+        if (userDO.getUserName() != null) {
+            existingUser.setUserName(userDO.getUserName());
+        }
+        if (userDO.getAc() != null) {
+            existingUser.setAc(userDO.getAc());
+        }
+
+        userRepository.save(existingUser);
 
         return true;
     }

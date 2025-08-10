@@ -1,14 +1,14 @@
 package com.mortis.ainews.infra.service.exception;
 
 public class ServiceException extends RuntimeException {
-    private final int code;
+    private final ErrorCode code;
 
-    public ServiceException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
-        this.code = errorCode.getCode();
+    public ServiceException(ErrorCode code) {
+        super(code.getMessage());
+        this.code = code;
     }
 
-    public int getCode() {
+    public ErrorCode getCode() {
         return code;
     }
 }
